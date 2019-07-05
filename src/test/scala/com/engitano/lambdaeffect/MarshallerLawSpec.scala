@@ -11,8 +11,6 @@ class MarshallerLawSpec extends CatsSuite {
 
   import instances.all._
 
-//  implicit def eq: Eq[Option[Int]] = Eq.fromUniversalEquals
-
   implicit def ec = ExhaustiveCheck.instance(Stream((1 to 50).toList :_*))
 
   implicit def ecs = ExhaustiveCheck.instance(Stream((1 to 50).map(_.toString).toList :_*))

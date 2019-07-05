@@ -39,7 +39,7 @@ object Marshaller {
   }
 }
 
-trait Marshaller[F[_], From, To] {
+trait Marshaller[F[_], -From, To] {
   self =>
   def marshall(t: From): F[To]
 
