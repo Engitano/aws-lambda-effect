@@ -1,4 +1,5 @@
-val kindProjector = "org.typelevel" % "kind-projector" % "0.10.0" cross CrossVersion.binary
+resolvers += Resolver.sonatypeRepo("releases")
+val kindProjector = "org.typelevel" % "kind-projector" % "0.10.3" cross CrossVersion.binary
 
 val majorVersion = SettingKey[String]("major version")
 val minorVersion = SettingKey[String]("minor version")
@@ -28,7 +29,7 @@ lazy val `aws-lambda-effect` = (project in file("."))
       Dependencies.lambda,
       Dependencies.slf4j,
       Dependencies.scalatest           % Test,
-      Dependencies.scalaMock           % Test,
+      Dependencies.scalamock           % Test,
       Dependencies.catsTestkit         % Test,
       Dependencies.scalacheckShapeless % Test
     )

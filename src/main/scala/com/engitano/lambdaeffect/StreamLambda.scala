@@ -5,7 +5,7 @@ import java.util.concurrent.Executors
 
 import cats.implicits._
 import cats.effect.implicits._
-import cats.effect.{ConcurrentEffect, ContextShift, Resource, Sync}
+import cats.effect.{Blocker, ConcurrentEffect, ContextShift, Resource, Sync}
 import com.amazonaws.services.lambda.runtime.Context
 import fs2.Pipe
 import org.slf4j.LoggerFactory
@@ -36,9 +36,9 @@ abstract class StreamLambda[F[_]: ConcurrentEffect: ContextShift] {
   ): F[Unit] =
     threadPool.use { ec =>
       _root_.fs2.io
-        .readInputStream(F.delay(input), input.available(), ec)
+        .readInputStream(F.delay(input), input.available(), Blocker.liftExecutionContext(ec))
         .through(handle(context))
-        .through(_root_.fs2.io.writeOutputStream(F.delay(output), ec))
+        .through(_root_.fs2.io.writeOutputStream(F.delay(output), Blocker.liftExecutionContext(ec)))
         .compile
         .drain
         .as(())

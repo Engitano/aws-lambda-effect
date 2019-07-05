@@ -10,11 +10,12 @@ import io.circe.generic.auto._
 import io.circe.parser._
 import io.circe.syntax._
 import org.scalamock.scalatest.MockFactory
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 import scala.concurrent.ExecutionContext
 
-class ProxyLambdaSpec extends WordSpec with Matchers with MockFactory {
+class ProxyLambdaSpec extends AnyWordSpec with Matchers with MockFactory {
 
   implicit val ec = ExecutionContext.global
   implicit val cs = IO.contextShift(ec)

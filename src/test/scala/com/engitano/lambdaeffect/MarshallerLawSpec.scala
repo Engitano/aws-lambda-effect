@@ -11,7 +11,14 @@ class MarshallerLawSpec extends CatsSuite {
 
   import instances.all._
 
-  implicit def eqMarshaller[A, B](implicit ev: Eq[A => Option[B]]): Eq[Marshaller[Option, A, B]] = Eq.by[Marshaller[Option, A, B],A => Option[B]](_.marshall)
+//  implicit def eq: Eq[Option[Int]] = Eq.fromUniversalEquals
+
+  implicit def ec = ExhaustiveCheck.instance(Stream((1 to 50).toList :_*))
+
+  implicit def ecs = ExhaustiveCheck.instance(Stream((1 to 50).map(_.toString).toList :_*))
+
+  implicit def eqMarshaller[A, B](implicit ev: Eq[A => Option[B]]): cats.kernel.Eq[Marshaller[Option, A, B]] =
+    Eq.by[Marshaller[Option, A, B], A => Option[B]](_.marshall)
 
   implicit def catsLawsArbitraryForMarshaller[F[_], A: Arbitrary: Cogen, B](implicit F: Arbitrary[F[B]]): Arbitrary[Marshaller[F, A, B]] =
     Arbitrary(Arbitrary.arbitrary[A => F[B]].map(a => new Marshaller[F, A, B] {
