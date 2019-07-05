@@ -11,7 +11,7 @@ jobs:
             - ivy
       - run:
           command: |
-            sbt ";set Global / patchVersion := Some(\"$CIRCLE_BUILD_NUM\");coverage;test;it:test;coverageReport;clean;coverageOff;publish;writeVersion"
+            sbt ";set Global / patchVersion := Some(\"$CIRCLE_BUILD_NUM\");coverage;test;coverageReport;clean;coverageOff;publish;writeVersion"
       - run: git tag $(cat ./version.txt) && git push --tags
       - save_cache:
           key: ivy
