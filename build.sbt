@@ -16,7 +16,7 @@ writeVersion := {
 test in publish := {}
 
 lazy val `aws-lambda-effect` = (project in file("."))
-  .settings(Common.settings())
+  .settings(Common())
   .settings(
     libraryDependencies ++= Seq(
       Dependencies.catsEffect,
