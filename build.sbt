@@ -18,6 +18,7 @@ test in publish := {}
 lazy val `aws-lambda-effect` = (project in file("."))
   .settings(Common())
   .settings(
+    version := s"${majorVersion.value}.${minorVersion.value}${patchVersion.value.fold("")(p => s".$p")}",
     libraryDependencies ++= Seq(
       Dependencies.catsEffect,
       Dependencies.circe,
